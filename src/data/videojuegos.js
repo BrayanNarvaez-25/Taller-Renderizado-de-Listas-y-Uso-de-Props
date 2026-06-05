@@ -19,7 +19,36 @@ const videojuegos = [
     disponible: true,
     progreso: 0.60
   },
-  // ... agrega más juegos
+  {
+    id: 3,
+    titulo: "God of War Ragnarök",
+    genero: "Acción",
+    plataforma: "PlayStation 5",
+    lanzamiento: 2022,
+    precio: 69.99,
+    disponible: true,
+    progreso: 0.30
+  },
+  {
+    id: 4,
+    titulo: "Hollow Knight",
+    genero: "Metroidvania",
+    plataforma: "PC",
+    lanzamiento: 2017,
+    precio: 14.99,
+    disponible: true,
+    progreso: 0.72
+  },
+  {
+    id: 5,
+    titulo: "Cyberpunk 2077",
+    genero: "RPG",
+    plataforma: "PC",
+    lanzamiento: 2020,
+    precio: 39.99,
+    disponible: false,
+    progreso: 0.50
+  }
 ];
 
 export default videojuegos;
