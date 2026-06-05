@@ -1,0 +1,34 @@
+.tabla-container {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.tabla-juegos {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.tabla-juegos th,
+.tabla-juegos td {
+  padding: 10px 14px;
+  text-align: left;
+  border-bottom: 1px solid #e5e7eb;
+  white-space: nowrap;
+}
+
+.tabla-juegos th {
+  background-color: #1f2937;
+  color: #ffffff;
+  font-weight: 600;
+}
+
+.tabla-juegos tr:hover {
+  background-color: #f9fafb;
+}
+
+progress {
+  width: 80px;
+  height: 8px;
+  accent-color: #e24b4a;
+}
