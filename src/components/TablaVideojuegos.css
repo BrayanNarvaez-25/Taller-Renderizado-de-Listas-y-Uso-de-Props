@@ -32,3 +32,32 @@ progress {
   height: 8px;
   accent-color: #e24b4a;
 }
+
+/* Estilos para los botones */
+.tabla-juegos button {
+  padding: 5px 12px;
+  margin-right: 6px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.tabla-juegos button:first-child {
+  background-color: #534AB7;
+  color: white;
+}
+
+.tabla-juegos button:first-child:hover {
+  background-color: #3C3489;
+}
+
+.tabla-juegos button:last-child {
+  background-color: #e24b4a;
+  color: white;
+}
+
+.tabla-juegos button:last-child:hover {
+  background-color: #a32d2d;
+}
