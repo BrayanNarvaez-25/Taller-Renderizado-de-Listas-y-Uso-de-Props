@@ -1,0 +1,104 @@
+.formulario-container {
+  max-width: 480px;
+  margin: 2rem auto;
+  background-color: #1f2937;
+  border-radius: 10px;
+  padding: 2rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.formulario-container h2 {
+  text-align: center;
+  color: #ffffff;
+  margin-bottom: 1.5rem;
+  font-size: 22px;
+}
+
+.formulario-campo {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
+}
+
+.formulario-campo label {
+  color: #d1d5db;
+  font-size: 14px;
+  margin-bottom: 5px;
+  font-weight: 500;
+}
+
+.formulario-campo input[type="text"],
+.formulario-campo input[type="number"],
+.formulario-campo select {
+  padding: 9px 12px;
+  border-radius: 6px;
+  border: 1px solid #374151;
+  background-color: #111827;
+  color: #ffffff;
+  font-size: 14px;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.formulario-campo input[type="text"]:focus,
+.formulario-campo input[type="number"]:focus,
+.formulario-campo select:focus {
+  border-color: #534AB7;
+}
+
+.formulario-campo select option {
+  background-color: #1f2937;
+}
+
+.campo-checkbox {
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+}
+
+.campo-checkbox input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  accent-color: #534AB7;
+  cursor: pointer;
+}
+
+.campo-checkbox label {
+  margin-bottom: 0;
+  cursor: pointer;
+}
+
+.formulario-botones {
+  display: flex;
+  gap: 10px;
+  margin-top: 1.5rem;
+}
+
+.formulario-botones button {
+  flex: 1;
+  padding: 10px;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.btn-submit {
+  background-color: #534AB7;
+  color: white;
+}
+
+.btn-submit:hover {
+  background-color: #3C3489;
+}
+
+.btn-cancelar {
+  background-color: #374151;
+  color: white;
+}
+
+.btn-cancelar:hover {
+  background-color: #4b5563;
+}

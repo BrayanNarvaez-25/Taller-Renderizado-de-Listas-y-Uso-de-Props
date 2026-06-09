@@ -1,5 +1,6 @@
 import { useLocation, useNavigate } from 'react-router-dom';
-import { useState, useEffect } from 'react';  // ← agregar useEffect
+import { useState, useEffect } from 'react';
+import './FormularioVideojuego.css';   // ← agregar
 
 function FormularioVideojuego({ onAgregar, onEditar }) {
   const location = useLocation();
@@ -12,7 +13,6 @@ function FormularioVideojuego({ onAgregar, onEditar }) {
   const [precio, setPrecio] = useState('');
   const [disponible, setDisponible] = useState(false);
 
-  // ← Esto sincroniza los campos cada vez que cambia el juego a editar
   useEffect(() => {
     if (juegoEditar) {
       setTitulo(juegoEditar.titulo || '');
@@ -27,7 +27,7 @@ function FormularioVideojuego({ onAgregar, onEditar }) {
       setPrecio('');
       setDisponible(false);
     }
-  }, [location.state]);  // ← se ejecuta cada vez que cambia el juego
+  }, [location.state]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -41,13 +41,13 @@ function FormularioVideojuego({ onAgregar, onEditar }) {
   };
 
   return (
-    <div>
+    <div className="formulario-container">
       <h2>{juegoEditar ? 'Editar Videojuego' : 'Registrar Videojuego'}</h2>
 
       <form onSubmit={handleSubmit}>
 
-        <div>
-          <label>Título:</label>
+        <div className="formulario-campo">
+          <label>Título</label>
           <input
             type="text"
             value={titulo}
@@ -57,8 +57,8 @@ function FormularioVideojuego({ onAgregar, onEditar }) {
           />
         </div>
 
-        <div>
-          <label>Plataforma:</label>
+        <div className="formulario-campo">
+          <label>Plataforma</label>
           <select value={plataforma} onChange={(e) => setPlataforma(e.target.value)}>
             <option value="PC">PC</option>
             <option value="PlayStation 5">PlayStation 5</option>
@@ -67,8 +67,8 @@ function FormularioVideojuego({ onAgregar, onEditar }) {
           </select>
         </div>
 
-        <div>
-          <label>Género:</label>
+        <div className="formulario-campo">
+          <label>Género</label>
           <select value={genero} onChange={(e) => setGenero(e.target.value)}>
             <option value="Acción">Acción</option>
             <option value="Aventura">Aventura</option>
@@ -79,8 +79,8 @@ function FormularioVideojuego({ onAgregar, onEditar }) {
           </select>
         </div>
 
-        <div>
-          <label>Precio:</label>
+        <div className="formulario-campo">
+          <label>Precio</label>
           <input
             type="number"
             value={precio}
@@ -92,24 +92,24 @@ function FormularioVideojuego({ onAgregar, onEditar }) {
           />
         </div>
 
-        <div>
-          <label>
-            <input
-              type="checkbox"
-              checked={disponible}
-              onChange={(e) => setDisponible(e.target.checked)}
-            />
-            Disponible en stock
-          </label>
+        <div className="formulario-campo campo-checkbox">
+          <input
+            type="checkbox"
+            id="disponible"
+            checked={disponible}
+            onChange={(e) => setDisponible(e.target.checked)}
+          />
+          <label htmlFor="disponible">Disponible en stock</label>
         </div>
 
-        <button type="submit">
-          {juegoEditar ? 'Guardar cambios' : 'Registrar juego'}
-        </button>
-
-        <button type="button" onClick={() => navigate('/')}>
-          Cancelar
-        </button>
+        <div className="formulario-botones">
+          <button type="submit" className="btn-submit">
+            {juegoEditar ? 'Guardar cambios' : 'Registrar juego'}
+          </button>
+          <button type="button" className="btn-cancelar" onClick={() => navigate('/')}>
+            Cancelar
+          </button>
+        </div>
 
       </form>
     </div>
