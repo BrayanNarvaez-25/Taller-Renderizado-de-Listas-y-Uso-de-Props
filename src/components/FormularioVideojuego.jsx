@@ -1,19 +1,37 @@
 import { useLocation, useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';  // ← agregar useEffect
 
 function FormularioVideojuego({ onAgregar, onEditar }) {
   const location = useLocation();
   const navigate = useNavigate();
   const juegoEditar = location.state;
 
-  const [nombre, setNombre] = useState(juegoEditar?.nombre || '');
-  const [plataforma, setPlataforma] = useState(juegoEditar?.plataforma || 'PC');
-  const [genero, setGenero] = useState(juegoEditar?.genero || 'Acción');
-  const [disponible, setDisponible] = useState(juegoEditar?.disponible || false);
+  const [titulo, setTitulo] = useState('');
+  const [plataforma, setPlataforma] = useState('PC');
+  const [genero, setGenero] = useState('Acción');
+  const [precio, setPrecio] = useState('');
+  const [disponible, setDisponible] = useState(false);
+
+  // ← Esto sincroniza los campos cada vez que cambia el juego a editar
+  useEffect(() => {
+    if (juegoEditar) {
+      setTitulo(juegoEditar.titulo || '');
+      setPlataforma(juegoEditar.plataforma || 'PC');
+      setGenero(juegoEditar.genero || 'Acción');
+      setPrecio(juegoEditar.precio || '');
+      setDisponible(juegoEditar.disponible || false);
+    } else {
+      setTitulo('');
+      setPlataforma('PC');
+      setGenero('Acción');
+      setPrecio('');
+      setDisponible(false);
+    }
+  }, [location.state]);  // ← se ejecuta cada vez que cambia el juego
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const juego = { nombre, plataforma, genero, disponible };
+    const juego = { titulo, plataforma, genero, precio: parseFloat(precio), disponible };
     if (juegoEditar) {
       onEditar({ ...juego, id: juegoEditar.id });
     } else {
@@ -28,30 +46,27 @@ function FormularioVideojuego({ onAgregar, onEditar }) {
 
       <form onSubmit={handleSubmit}>
 
-        {/* Input tipo text */}
         <div>
-          <label>Nombre:</label>
+          <label>Título:</label>
           <input
             type="text"
-            value={nombre}
-            onChange={(e) => setNombre(e.target.value)}
-            placeholder="Nombre del videojuego"
+            value={titulo}
+            onChange={(e) => setTitulo(e.target.value)}
+            placeholder="Título del videojuego"
             required
           />
         </div>
 
-        {/* Input tipo select - Plataforma */}
         <div>
           <label>Plataforma:</label>
           <select value={plataforma} onChange={(e) => setPlataforma(e.target.value)}>
             <option value="PC">PC</option>
-            <option value="PlayStation">PlayStation</option>
+            <option value="PlayStation 5">PlayStation 5</option>
             <option value="Xbox">Xbox</option>
             <option value="Nintendo Switch">Nintendo Switch</option>
           </select>
         </div>
 
-        {/* Input tipo select - Género */}
         <div>
           <label>Género:</label>
           <select value={genero} onChange={(e) => setGenero(e.target.value)}>
@@ -59,11 +74,24 @@ function FormularioVideojuego({ onAgregar, onEditar }) {
             <option value="Aventura">Aventura</option>
             <option value="RPG">RPG</option>
             <option value="Deportes">Deportes</option>
+            <option value="Metroidvania">Metroidvania</option>
             <option value="Terror">Terror</option>
           </select>
         </div>
 
-        {/* Input tipo checkbox */}
+        <div>
+          <label>Precio:</label>
+          <input
+            type="number"
+            value={precio}
+            onChange={(e) => setPrecio(e.target.value)}
+            placeholder="0.00"
+            step="0.01"
+            min="0"
+            required
+          />
+        </div>
+
         <div>
           <label>
             <input

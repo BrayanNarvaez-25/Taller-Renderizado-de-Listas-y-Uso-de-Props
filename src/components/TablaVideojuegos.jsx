@@ -1,23 +1,27 @@
 import { useNavigate } from 'react-router-dom';
 
-function TablaVideojuegos({ juegos, onEliminar }) {
+function TablaVideojuegos({ videojuegos, onEliminar }) {
   const navigate = useNavigate();
 
   return (
     <table>
       <thead>
         <tr>
-          <th>Nombre</th>
+          <th>Título</th>
+          <th>Género</th>
           <th>Plataforma</th>
+          <th>Precio</th>
           <th>Disponible</th>
           <th>Acciones</th>
         </tr>
       </thead>
       <tbody>
-        {juegos.map((juego) => (
+        {videojuegos.map((juego) => (  
           <tr key={juego.id}>
-            <td>{juego.nombre}</td>
+            <td>{juego.titulo}</td>      
+            <td>{juego.genero}</td>
             <td>{juego.plataforma}</td>
+            <td>${juego.precio}</td>
             <td>{juego.disponible ? 'Sí' : 'No'}</td>
             <td>
               <button onClick={() => navigate('/formulario', { state: juego })}>
