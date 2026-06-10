@@ -61,3 +61,10 @@ progress {
 .tabla-juegos button:last-child:hover {
   background-color: #a32d2d;
 }
+
+.celda-sinopsis {
+  max-width: 200px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

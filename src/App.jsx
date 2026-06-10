@@ -1,17 +1,24 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import videojuegosData from './data/videojuegos';
 import TablaVideojuegos from './components/TablaVideojuegos';
 import FormularioVideojuego from './components/FormularioVideojuego';
 import Navbar from './components/Navbar';
 import PaginaNoEncontrada from './components/PaginaNoEncontrada';
+import AlertaNotificacion from './components/AlertaNotificacion';
 
 function App() {
-  const [videojuegos, setVideojuegos] = useState(videojuegosData);
+  const [videojuegos, setVideojuegos] = useState(() => {
+    const datosGuardados = localStorage.getItem('lista_videojuegos');
+    return datosGuardados ? JSON.parse(datosGuardados) : videojuegosData;
+  });
 
   const [alerta, setAlerta] = useState('');
 
-  // Modificar las funciones para mostrar el toast:
+  useEffect(() => {
+    localStorage.setItem('lista_videojuegos', JSON.stringify(videojuegos));
+  }, [videojuegos]);
+
   const agregar = (juego) => {
     setVideojuegos([...videojuegos, juego]);
     setAlerta('Videojuego registrado con éxito.');

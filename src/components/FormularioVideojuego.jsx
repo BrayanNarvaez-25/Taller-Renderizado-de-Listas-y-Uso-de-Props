@@ -1,6 +1,6 @@
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
-import './FormularioVideojuego.css';   // ← agregar
+import './FormularioVideojuego.css';
 
 function FormularioVideojuego({ onAgregar, onEditar }) {
   const location = useLocation();
@@ -12,9 +12,10 @@ function FormularioVideojuego({ onAgregar, onEditar }) {
   const [genero, setGenero] = useState('Acción');
   const [precio, setPrecio] = useState('');
   const [disponible, setDisponible] = useState(false);
-  const [fechaLanzamiento, setFechaLanzamiento] = useState(juegoEditar?.fechaLanzamiento || '');
-  const [sinopsis, setSinopsis] = useState(juegoEditar?.sinopsis || '');
-  const [calificacion, setCalificacion] = useState(juegoEditar?.calificacion || '');
+  const [fechaLanzamiento, setFechaLanzamiento] = useState('');
+  const [sinopsis, setSinopsis] = useState('');
+  const [calificacion, setCalificacion] = useState('');
+  const [progreso, setProgreso] = useState(0);
   const [errores, setErrores] = useState({});
 
   useEffect(() => {
@@ -24,15 +25,20 @@ function FormularioVideojuego({ onAgregar, onEditar }) {
       setGenero(juegoEditar.genero || 'Acción');
       setPrecio(juegoEditar.precio || '');
       setDisponible(juegoEditar.disponible || false);
-      setFechaLanzamiento(juegoEditar?.fechaLanzamiento || '');
-      setSinopsis(juegoEditar?.sinopsis || '');
-      setCalificacion(juegoEditar?.calificacion || '');
+      setFechaLanzamiento(juegoEditar.fechaLanzamiento || '');
+      setSinopsis(juegoEditar.sinopsis || '');
+      setCalificacion(juegoEditar.calificacion || '');
+      setProgreso(juegoEditar.progreso || 0);
     } else {
       setTitulo('');
       setPlataforma('PC');
       setGenero('Acción');
       setPrecio('');
       setDisponible(false);
+      setFechaLanzamiento('');
+      setSinopsis('');
+      setCalificacion('');
+      setProgreso(0);
     }
   }, [location.state]);
 
@@ -52,18 +58,6 @@ function FormularioVideojuego({ onAgregar, onEditar }) {
     return erroresActivos;
   };
 
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const juego = { titulo, plataforma, genero, precio: parseFloat(precio), disponible, fechaLanzamiento, sinopsis, calificacion: parseInt(calificacion) };
-    if (juegoEditar) {
-      onEditar({ ...juego, id: juegoEditar.id });
-    } else {
-      onAgregar({ ...juego, id: Date.now() });
-    }
-    navigate('/');
-  };
-
   const handleSubmit = (e) => {
     e.preventDefault();
     const erroresActivos = validarFormulario();
@@ -72,7 +66,17 @@ function FormularioVideojuego({ onAgregar, onEditar }) {
       return;
     }
     setErrores({});
-    const juego = { titulo, plataforma, genero, precio: parseFloat(precio), disponible, fechaLanzamiento, sinopsis, calificacion: parseInt(calificacion) };
+    const juego = {
+      titulo,
+      plataforma,
+      genero,
+      precio: parseFloat(precio),
+      disponible,
+      fechaLanzamiento,
+      sinopsis,
+      calificacion: parseInt(calificacion),
+      progreso: parseFloat(progreso)
+    };
     if (juegoEditar) {
       onEditar({ ...juego, id: juegoEditar.id });
     } else {
@@ -94,7 +98,6 @@ function FormularioVideojuego({ onAgregar, onEditar }) {
             value={titulo}
             onChange={(e) => setTitulo(e.target.value)}
             placeholder="Título del videojuego"
-            required
           />
           {errores.titulo && <span className="error-mensaje">{errores.titulo}</span>}
         </div>
@@ -130,7 +133,6 @@ function FormularioVideojuego({ onAgregar, onEditar }) {
             placeholder="0.00"
             step="0.01"
             min="0"
-            required
           />
         </div>
 
@@ -144,7 +146,6 @@ function FormularioVideojuego({ onAgregar, onEditar }) {
           <label htmlFor="disponible">Disponible en stock</label>
         </div>
 
-        {/* Fecha de lanzamiento */}
         <div className="formulario-campo">
           <label>Fecha de lanzamiento</label>
           <input
@@ -155,7 +156,6 @@ function FormularioVideojuego({ onAgregar, onEditar }) {
           />
         </div>
 
-        {/* Sinopsis */}
         <div className="formulario-campo">
           <label>Sinopsis</label>
           <textarea
@@ -169,7 +169,6 @@ function FormularioVideojuego({ onAgregar, onEditar }) {
           <small>{sinopsis.length}/250 caracteres</small>
         </div>
 
-        {/* Calificación */}
         <div className="formulario-campo">
           <label>Calificación (1-100)</label>
           <input
@@ -181,6 +180,18 @@ function FormularioVideojuego({ onAgregar, onEditar }) {
             placeholder="Ej: 85"
           />
           {errores.calificacion && <span className="error-mensaje">{errores.calificacion}</span>}
+        </div>
+
+        <div className="formulario-campo">
+          <label>Progreso: {Math.round(progreso * 100)}%</label>
+          <input
+            type="range"
+            value={progreso}
+            onChange={(e) => setProgreso(e.target.value)}
+            min="0"
+            max="1"
+            step="0.01"
+          />
         </div>
 
         <div className="formulario-botones">

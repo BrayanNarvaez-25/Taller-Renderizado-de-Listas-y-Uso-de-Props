@@ -15,6 +15,9 @@ function TablaVideojuegos({ videojuegos, onEliminar }) {
             <th>Precio</th>
             <th>Disponible</th>
             <th>Progreso</th>
+            <th>Fecha</th>
+            <th>Sinopsis</th>
+            <th>Calificación</th>
             <th>Acciones</th>
           </tr>
         </thead>
@@ -29,6 +32,9 @@ function TablaVideojuegos({ videojuegos, onEliminar }) {
               <td>
                 <progress value={juego.progreso} max={1} />
               </td>
+              <td>{juego.fechaLanzamiento || '—'}</td>
+              <td className="celda-sinopsis">{juego.sinopsis || '—'}</td>
+              <td>{juego.calificacion ? `${juego.calificacion}/100` : '—'}</td>
               <td>
                 <button onClick={() => navigate('/formulario', { state: juego })}>
                   Editar
