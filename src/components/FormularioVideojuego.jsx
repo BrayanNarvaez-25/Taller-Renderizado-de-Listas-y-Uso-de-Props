@@ -12,6 +12,9 @@ function FormularioVideojuego({ onAgregar, onEditar }) {
   const [genero, setGenero] = useState('Acción');
   const [precio, setPrecio] = useState('');
   const [disponible, setDisponible] = useState(false);
+  const [fechaLanzamiento, setFechaLanzamiento] = useState(juegoEditar?.fechaLanzamiento || '');
+  const [sinopsis, setSinopsis] = useState(juegoEditar?.sinopsis || '');
+  const [calificacion, setCalificacion] = useState(juegoEditar?.calificacion || '');
 
   useEffect(() => {
     if (juegoEditar) {
@@ -20,6 +23,9 @@ function FormularioVideojuego({ onAgregar, onEditar }) {
       setGenero(juegoEditar.genero || 'Acción');
       setPrecio(juegoEditar.precio || '');
       setDisponible(juegoEditar.disponible || false);
+      setFechaLanzamiento(juegoEditar?.fechaLanzamiento || '');
+      setSinopsis(juegoEditar?.sinopsis || '');
+      setCalificacion(juegoEditar?.calificacion || '');
     } else {
       setTitulo('');
       setPlataforma('PC');
@@ -31,7 +37,7 @@ function FormularioVideojuego({ onAgregar, onEditar }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const juego = { titulo, plataforma, genero, precio: parseFloat(precio), disponible };
+    const juego = { titulo, plataforma, genero, precio: parseFloat(precio), disponible, fechaLanzamiento, sinopsis, calificacion: parseInt(calificacion) };
     if (juegoEditar) {
       onEditar({ ...juego, id: juegoEditar.id });
     } else {
@@ -100,6 +106,43 @@ function FormularioVideojuego({ onAgregar, onEditar }) {
             onChange={(e) => setDisponible(e.target.checked)}
           />
           <label htmlFor="disponible">Disponible en stock</label>
+        </div>
+
+        {/* Fecha de lanzamiento */}
+        <div className="formulario-campo">
+          <label>Fecha de lanzamiento</label>
+          <input
+            type="date"
+            value={fechaLanzamiento}
+            max={new Date().toISOString().split('T')[0]}
+            onChange={(e) => setFechaLanzamiento(e.target.value)}
+          />
+        </div>
+
+        {/* Sinopsis */}
+        <div className="formulario-campo">
+          <label>Sinopsis</label>
+          <textarea
+            value={sinopsis}
+            onChange={(e) => setSinopsis(e.target.value)}
+            placeholder="Escribe una reseña corta..."
+            maxLength={250}
+            rows={4}
+          />
+          <small>{sinopsis.length}/250 caracteres</small>
+        </div>
+
+        {/* Calificación */}
+        <div className="formulario-campo">
+          <label>Calificación (1-100)</label>
+          <input
+            type="number"
+            value={calificacion}
+            onChange={(e) => setCalificacion(e.target.value)}
+            min="1"
+            max="100"
+            placeholder="Ej: 85"
+          />
         </div>
 
         <div className="formulario-botones">
