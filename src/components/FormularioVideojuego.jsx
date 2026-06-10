@@ -15,6 +15,7 @@ function FormularioVideojuego({ onAgregar, onEditar }) {
   const [fechaLanzamiento, setFechaLanzamiento] = useState(juegoEditar?.fechaLanzamiento || '');
   const [sinopsis, setSinopsis] = useState(juegoEditar?.sinopsis || '');
   const [calificacion, setCalificacion] = useState(juegoEditar?.calificacion || '');
+  const [errores, setErrores] = useState({});
 
   useEffect(() => {
     if (juegoEditar) {
@@ -35,8 +36,42 @@ function FormularioVideojuego({ onAgregar, onEditar }) {
     }
   }, [location.state]);
 
+  const validarFormulario = () => {
+    const erroresActivos = {};
+
+    if (!titulo.trim()) {
+      erroresActivos.titulo = 'El título no puede estar vacío.';
+    }
+    if (!calificacion || calificacion < 1 || calificacion > 100) {
+      erroresActivos.calificacion = 'La calificación debe estar entre 1 y 100.';
+    }
+    if (sinopsis.trim().length < 10) {
+      erroresActivos.sinopsis = 'La sinopsis debe tener al menos 10 caracteres.';
+    }
+
+    return erroresActivos;
+  };
+
+
   const handleSubmit = (e) => {
     e.preventDefault();
+    const juego = { titulo, plataforma, genero, precio: parseFloat(precio), disponible, fechaLanzamiento, sinopsis, calificacion: parseInt(calificacion) };
+    if (juegoEditar) {
+      onEditar({ ...juego, id: juegoEditar.id });
+    } else {
+      onAgregar({ ...juego, id: Date.now() });
+    }
+    navigate('/');
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const erroresActivos = validarFormulario();
+    if (Object.keys(erroresActivos).length > 0) {
+      setErrores(erroresActivos);
+      return;
+    }
+    setErrores({});
     const juego = { titulo, plataforma, genero, precio: parseFloat(precio), disponible, fechaLanzamiento, sinopsis, calificacion: parseInt(calificacion) };
     if (juegoEditar) {
       onEditar({ ...juego, id: juegoEditar.id });
@@ -61,6 +96,7 @@ function FormularioVideojuego({ onAgregar, onEditar }) {
             placeholder="Título del videojuego"
             required
           />
+          {errores.titulo && <span className="error-mensaje">{errores.titulo}</span>}
         </div>
 
         <div className="formulario-campo">
@@ -129,6 +165,7 @@ function FormularioVideojuego({ onAgregar, onEditar }) {
             maxLength={250}
             rows={4}
           />
+          {errores.sinopsis && <span className="error-mensaje">{errores.sinopsis}</span>}
           <small>{sinopsis.length}/250 caracteres</small>
         </div>
 
@@ -143,6 +180,7 @@ function FormularioVideojuego({ onAgregar, onEditar }) {
             max="100"
             placeholder="Ej: 85"
           />
+          {errores.calificacion && <span className="error-mensaje">{errores.calificacion}</span>}
         </div>
 
         <div className="formulario-botones">
