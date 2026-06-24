@@ -34,9 +34,13 @@ function App() {
     setAlerta('Videojuego actualizado con éxito.');
   };
 
+  const saludarTienda = (nombreTienda) => { 
+    alert("Bienvenido a " + nombreTienda);
+  };
+
   return (
     <BrowserRouter>
-      <Navbar />
+      <Navbar nombreTienda="Gaming Store KrakeDev" onSaludar={saludarTienda} />
       {alerta && <AlertaNotificacion mensaje={alerta} onCerrar={() => setAlerta('')} />}
       <div style={{ padding: '2rem' }}>
         <h1>🎮 Tienda de Videojuegos</h1>
