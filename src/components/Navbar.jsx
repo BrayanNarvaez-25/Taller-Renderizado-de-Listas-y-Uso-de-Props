@@ -1,15 +1,13 @@
 import { Link } from 'react-router-dom';
 import './Navbar.css';
 
-function Navbar({nombreTienda,onSaludar}) {
+function Navbar() {
   return (
     <nav className="navbar">
-      <span className="navbar-brand">🎮 {nombreTienda}</span>
+      <span className="navbar-brand">🎮 Tienda de Videojuegos</span>
       <div className="navbar-links">
         <Link to="/">Inventario</Link>
         <Link to="/formulario">Nuevo Juego</Link>
-        <button onClick={() => onSaludar(nombreTienda)}>
-           Saludar Tienda </button>
       </div>
     </nav>
   );

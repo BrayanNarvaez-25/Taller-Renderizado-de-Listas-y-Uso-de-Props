@@ -40,7 +40,7 @@ function App() {
 
   return (
     <BrowserRouter>
-      <Navbar nombreTienda="Gaming Store KrakeDev" onSaludar={saludarTienda} />
+      <Navbar/>
       {alerta && <AlertaNotificacion mensaje={alerta} onCerrar={() => setAlerta('')} />}
       <div style={{ padding: '2rem' }}>
         <h1>🎮 Tienda de Videojuegos</h1>
