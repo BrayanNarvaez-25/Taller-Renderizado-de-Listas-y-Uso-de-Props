@@ -40,7 +40,7 @@ function App() {
 
   return (
     <BrowserRouter>
-      <Navbar/>
+      <Navbar nombreTienda="Tienda Dev" onSaludar={saludarTienda}/>
       {alerta && <AlertaNotificacion mensaje={alerta} onCerrar={() => setAlerta('')} />}
       <div style={{ padding: '2rem' }}>
         <h1>🎮 Tienda de Videojuegos</h1>
